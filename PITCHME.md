@@ -1,5 +1,18 @@
 ### raiden and plasma
 
+<!---
+raiden
+- https://getpocket.com/a/read/1652697454
+- https://docs.google.com/document/d/1K3AgMIjF3EXtdl3SMb86HG2UpMJcnxrBu-mQPMVs5eM/edit#
+- https://docs.google.com/document/d/16f3Y7PP-ORL66-Jb7ZGAbugonF8XYhyBGbADFVHZ2Fk/edit#heading=h.jcz327gq3ie9
+plasma
+- https://docs.google.com/document/d/1V0KTECy6hmD4gTdbNyIk3_rPb5d5aHQFhBhIe7zG0Gw/edit#
+- https://zoom-blc.com/plasma-ethereum
+child chian -> baby chain?
+前提知識を詳細に
+
+--->
+
 ---
 
 ### 私
@@ -19,7 +32,7 @@
   - Akka HTTP
 - Recommend Batch
   - Spark
-- SQL はちょと苦手
+- SQLちょと苦手
 
 ---
 
@@ -58,7 +71,7 @@
 
 - タスクの一部をブロックチェーンの外側で処理
 - ノード全体でデータを共有する必要がない
-- 実装例
+- 例
   - Raiden
   - TrueBit
   - Lightning Network
@@ -83,9 +96,9 @@
 
 - タスクやデータを分割して、分割されたタスクやデータを並列で処理
 - MapReduce
-- 実装例
-  - シャーディング
+- 例
   - Plasma
+  - シャーディング
 
 ---
 
@@ -95,26 +108,74 @@
 - ペイメントチャネル
 - 単方向ペイメントチャネル
 - 双方向ペイメントチャネル
-- Ethereumはトランザクションでステートがブロックごとに変化していく
+- Lightning Network
+
+---
+
+### 前提知識
+*マルチシグアドレス*
+
+- M-of-N
+- N個の秘密鍵のうち、M個の秘密鍵で開錠
+
+![multisig](multisig.png)<!-- .element height="35%" width="35%" -->
+
+---
+
+### 前提知識
+*ペイメントチャネル*
+
+- 2-of-2マルチシグアドレスにデポジット
+- デポジットの範囲内で高速にやりとり
+- ブロックに書かれるトランザクションは1回
+
+---
+
+### 前提知識
+*単方向ペイメントチャネル*
+
+- AliceからBobへの一方向のやりとり
+- AliceがAliceとBobの2-of-2マルチシグにデポジット
+- デポジットの範囲内でBobにn回やりとり
+
+---
+
+### 前提知識
+*双方向ペイメントチャネル*
+
+- AliceとBobの相互のやりとり
+- AliceとBobが2-of-2マルチシグにデポジット
+- デポジットの範囲内で相互にn回やりとり
+- 不正が行われた際は全額回収できる仕組み
+
+---
+
+### 前提知識
+*Lightning Network*
+
+- 双方向ペイメントチャネルのリレー
+- HTLCで途中の経由で盗めないようになっている
+
+![lightning-network](lightning-network.png)<!-- .element height="50%" width="50%" -->
 
 ---
 
 ### Raiden
 
-- Lightning Network <- 前提知識に移動？
-- Hashed Timelock Contract <- 前提知識に移動？
+- Lightning Networkのアイデアをベースにしている
 - オフチェーンでトランザクションを処理する
-- オフチェーンではERC20準拠トークンの受け渡ししかできない
+- ブロック生成を待たないので高速にやりとり可能
+- ERC20準拠トークンの受け渡ししかできない
 
 ---
 
 ### Raiden
 *Lightning Networkとの違い*
 
-- Lightning NetworkはBTCのみ
-- RaidenはERC20準拠トークン
-- ETHはWETHにする
-- WETH = Wrapped ETH
+- Lightning NetworkはBTCのやりとりのみ
+- RaidenはERC20準拠トークンがやりとり可能
+- ETHはWETHにしてやりとり
+- WETH = ETHをERC20にラップしたもの
 
 ---
 
@@ -124,7 +185,8 @@
 - 手数料かからない
 - オープンチャネルとクローズのコミット以外
 - オフチェーンの取引は公開されない
-- TK 視聴課金などの具体例
+- 例：動画視聴ごとに課金課金されるサービスの月額課金
+- いくら使ったかはわかってもいつどれだけ使ったか、はわからない
 
 ---
 
@@ -132,6 +194,7 @@
 *デメリット*
 
 - あらかじめデポジットした量を超えてやりとり不能
+- デポジットを超える可能性のあるやりとりには不向き
 
 ---
 
@@ -139,17 +202,19 @@
 *Raidenの種類*
 
 - μRaiden
-- raiden network
-- raidos
+- Raiden Network
+- Raidos
 
 ---
 
 ### Raiden
 *μRaiden*
 
-- 片方向のチャネル
-- dapps対ユーザーなどの1対nのユースケース
-- ERC20とERC223に準拠した専用のRDNトークン
+- 脆弱性発見バージョンがリリース済み
+- 単方向チャネル
+- アプリケーション対ユーザーなどの1対nのユースケース
+- 専用のRDNトークンのみやりとり可能
+- ERC20とERC223は後日対応
 
 ---
 
@@ -173,18 +238,20 @@
 ### Raiden
 *Raiden Network*
 
-- μRaidenを相互接続する？
-- n対nの双方向
-- バケツリレーでトークン転送できる
-- チャネル経由の際にインセンティブを経由に与えるのでコストはかかる
+- テストネットにリリース済み
+- 双方向チャネル
+- n対nのユースケース
+- バケツリレーで転送できる
+- チャネル経由の際のインセンティブコストがかかる
 
 ---
 
 ### Raiden
 *Raidos*
 
+- 計画段階で開発が開始されていない
+- Raiden2.0
 - スマートコントラクトの実行をサイドチェーンで行う
-- 構想段階でよくわからん
 
 ---
 
@@ -194,7 +261,7 @@
 - Raidenで使うRDNトークンの売り出し
 - 類似プラットフォームの乱立を回避
 - フルノードの維持費
-- サードパーティツールのインセンティブ
+- サードパーティツールへのインセンティブ
 
 ---
 
@@ -204,7 +271,7 @@
 - raidEX
   - 高速なDEXを実現する
 - Trustlines Network
-  - Ripple on Ethereal
+  - 法定通貨のペイメント
 
 ---
 
@@ -218,42 +285,79 @@
 ### Plasma
 *概要*
 
-- main chain にサイドチェーンを作成(child chain)
-- child chainで処理する
-- 必要に応じてメインチェーンに書き込む
-- child chain はメインチェーンと構造が同じ
-- メインチェーン全部を見なくても、child chain だと必要なものしか見なくて良い
+- 2017年8月に発表
+- 実装はまだ
+- この情報も変わるかも
+- Root Chain にPlasma Chainを接続する
+- Plasma Chainに処理を移譲し、最終結果をRoot Chainに書き込む
+- Plasma ChainはRoot Chainと構造が同じ
+
+---
+
+### Plasma
+
+![plasma](plasma.png)<!-- .element height="50%" width="50%" -->
 
 ---
 
 ### Plasma
 *処理の詳細*
 
-- main chain と child chain は階層構造
-- main chainでやるタスクを細分化して
-- child chainに分配
-- 処理が終わった結果をreduceする
-- main chainに戻す
+- Chainの階層構造
+- Root ChainでやるタスクをPlasma Chainに送る
+- さらに下のChainにタスクを細分化して送る
+- 下のChainは処理完了したら上のChainに戻す
+- 処理をまとめ上げる
+- Root Chainに送信する
+
+---
+
+### Plasma
+*処理の詳細*
+
+![mapreduce](mapreduce.png)<!-- .element height="60%" width="60%" -->
 
 ---
 
 ### Plasma
 *処理性能の向上例*
 
-- main chainが10tx/sec
-- 3分割したchild chainで30tx/sec
-- さらに3分割したら90tx/sec
-- さらに3分割したら270tx/sec
+各Chainの処理量が10tx/secだとしたら
+
+- Child Chain x 3 = 30tx/sec
+- さらにChild Chain x 3 = 90tx/sec
+- さらにChild Chain x 3 = 270tx/sec
 
 ---
 
 ### Plasma
-*特徴*
+*カウンターパーティごとに並列計算*
+
+![counterparty-diagram](counterparty-diagram.png)<!-- .element height="70%" width="70%" -->
+
+---
+
+### Plasma
+*カウンターパーティごとに並列計算*
+
+![counterparty](counterparty.png)<!-- .element height="60%" width="60%" -->
+
+---
+
+### Plasma
+*Raidenと併用*
+
+![raiden-on-plasma](raiden-on-plasma.png)<!-- .element height="20%" width="20%" -->
+
+---
+
+### Plasma
+*メリット*
 
 - スマートコントラクトも動作可能
-- Raidenのraidosに似ている
-- 不正防止
-- fraud proof
+- データサイズが減る
+- 並行処理で大きなトランザクションが動かせる
+- 不正防止, fraud proof
 
 ---
 
