@@ -1,4 +1,4 @@
-### raiden and plasma
+### Raiden and Plasma
 
 ---
 
@@ -34,6 +34,10 @@
 
 - ブロックチェーンのスケーラビリティ問題を理解する
 - Raiden, Plasmaについて理解する
+
+---
+
+### スケーラビリティ
 
 ---
 
@@ -86,6 +90,10 @@
 - 例
   - Plasma
   - シャーディング
+
+---
+
+### 前提知識
 
 ---
 
@@ -144,6 +152,10 @@
 - HTLCで途中の経由で盗めないようになっている
 
 ![lightning-network](lightning-network.png)<!-- .element height="50%" width="50%" -->
+
+---
+
+### Raiden
 
 ---
 
@@ -253,6 +265,10 @@
 ---
 
 ### Plasma
+
+---
+
+### Plasma
 *概要*
 
 - 2017年8月に発表
@@ -260,7 +276,8 @@
 - この情報も変わるかも
 - Root Chain にPlasma Chainを接続する
 - Plasma Chainに処理を移譲し、最終結果をRoot Chainに書き込む
-- Plasma ChainはRoot Chainと構造が同じ
+- Plasma Chainでスマートコントラクト実行可能
+- 不正防止機能、fraud proof
 
 ---
 
@@ -327,7 +344,6 @@
 - スマートコントラクトも動作可能
 - データサイズが減る
 - 並行処理で大きなトランザクションが動かせる
-- 不正防止, fraud proof
 
 ---
 
