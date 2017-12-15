@@ -1,18 +1,5 @@
 ### raiden and plasma
 
-<!---
-raiden
-- https://getpocket.com/a/read/1652697454
-- https://docs.google.com/document/d/1K3AgMIjF3EXtdl3SMb86HG2UpMJcnxrBu-mQPMVs5eM/edit#
-- https://docs.google.com/document/d/16f3Y7PP-ORL66-Jb7ZGAbugonF8XYhyBGbADFVHZ2Fk/edit#heading=h.jcz327gq3ie9
-plasma
-- https://docs.google.com/document/d/1V0KTECy6hmD4gTdbNyIk3_rPb5d5aHQFhBhIe7zG0Gw/edit#
-- https://zoom-blc.com/plasma-ethereum
-child chian -> baby chain?
-前提知識を詳細に
-
---->
-
 ---
 
 ### 私
@@ -218,23 +205,6 @@ child chian -> baby chain?
 
 ---
 
-<!---
-
-### Raiden
-*μRaiden*
-#### デモ
-
-- オンチェーンにpayment channelを作成するのは15秒かかる
-- 開いたらあとは爆速
-- 0.5秒でトランザクション完了
-- 足りなくなったらオンチェーンに書き込む、時間がかかる
-- クローズも時間かかる15秒かかる
-- オフチェーンの取引はgasがかからない
-- ERC20とERC223に準拠した専用のRDNトークン
-
----
---->
-
 ### Raiden
 *Raiden Network*
 
@@ -369,5 +339,4 @@ child chian -> baby chain?
 - plasma
   - スループットの向上
   - MapReduce
-
-<!--- 大量の処理を高速化するのには向いているけど、各々のトランザクションを早くするのには向かないかも？ --->  
+  - ≠ 個々のトランザクションの高速化ではない
